@@ -1,0 +1,209 @@
+{
+  "version": "38.0.1",
+  "artifacts": {
+    "AuthStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "AuthStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "AuthStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://735463262977/us-east-1",
+      "properties": {
+        "templateFile": "AuthStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::735463262977:role/cdk-hnb659fds-deploy-role-735463262977-us-east-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::735463262977:role/cdk-hnb659fds-cfn-exec-role-735463262977-us-east-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-735463262977-us-east-1/4f7512f205a82fe8be1d398f47c722baed8e24df5e924374bf2b84d45b03a69b.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "AuthStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::735463262977:role/cdk-hnb659fds-lookup-role-735463262977-us-east-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "AuthStack.assets"
+      ],
+      "metadata": {
+        "/AuthStack/UsersTable/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UsersTable9725E9C8"
+          }
+        ],
+        "/AuthStack/LoginFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LoginFunctionServiceRole74B42ABA"
+          }
+        ],
+        "/AuthStack/LoginFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LoginFunctionServiceRoleDefaultPolicy2FE1C77C"
+          }
+        ],
+        "/AuthStack/LoginFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LoginFunction66F090C6"
+          }
+        ],
+        "/AuthStack/RegisterFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RegisterFunctionServiceRoleDB8F6C89"
+          }
+        ],
+        "/AuthStack/RegisterFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RegisterFunctionServiceRoleDefaultPolicyC4352E3C"
+          }
+        ],
+        "/AuthStack/RegisterFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RegisterFunction735506DF"
+          }
+        ],
+        "/AuthStack/AuthApi/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuthApi4BD72F20"
+          }
+        ],
+        "/AuthStack/AuthApi/Deployment/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuthApiDeploymentB62B2E464ddcf65113150910e537fa048aa9b374"
+          }
+        ],
+        "/AuthStack/AuthApi/DeploymentStage.prod/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuthApiDeploymentStageprodB0E4172A"
+          }
+        ],
+        "/AuthStack/AuthApi/Endpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuthApiEndpointF49088BF"
+          }
+        ],
+        "/AuthStack/AuthApi/Default/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuthApiOPTIONS3BD43A91"
+          }
+        ],
+        "/AuthStack/AuthApi/Default/auth/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuthApiauthCDCDCAC9"
+          }
+        ],
+        "/AuthStack/AuthApi/Default/auth/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuthApiauthOPTIONSFFC8BF39"
+          }
+        ],
+        "/AuthStack/AuthApi/Default/auth/login/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuthApiauthlogin8DF7512A"
+          }
+        ],
+        "/AuthStack/AuthApi/Default/auth/login/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuthApiauthloginOPTIONS95057460"
+          }
+        ],
+        "/AuthStack/AuthApi/Default/auth/login/POST/ApiPermission.AuthStackAuthApi0B327A88.POST..auth.login": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuthApiauthloginPOSTApiPermissionAuthStackAuthApi0B327A88POSTauthlogin76FF177F"
+          }
+        ],
+        "/AuthStack/AuthApi/Default/auth/login/POST/ApiPermission.Test.AuthStackAuthApi0B327A88.POST..auth.login": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuthApiauthloginPOSTApiPermissionTestAuthStackAuthApi0B327A88POSTauthlogin23B3004D"
+          }
+        ],
+        "/AuthStack/AuthApi/Default/auth/login/POST/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuthApiauthloginPOSTA73401FD"
+          }
+        ],
+        "/AuthStack/AuthApi/Default/auth/register/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuthApiauthregister8A0635E1"
+          }
+        ],
+        "/AuthStack/AuthApi/Default/auth/register/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuthApiauthregisterOPTIONS8469F367"
+          }
+        ],
+        "/AuthStack/AuthApi/Default/auth/register/POST/ApiPermission.AuthStackAuthApi0B327A88.POST..auth.register": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuthApiauthregisterPOSTApiPermissionAuthStackAuthApi0B327A88POSTauthregisterFAF9ED93"
+          }
+        ],
+        "/AuthStack/AuthApi/Default/auth/register/POST/ApiPermission.Test.AuthStackAuthApi0B327A88.POST..auth.register": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuthApiauthregisterPOSTApiPermissionTestAuthStackAuthApi0B327A88POSTauthregister691599A3"
+          }
+        ],
+        "/AuthStack/AuthApi/Default/auth/register/POST/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuthApiauthregisterPOST13715A26"
+          }
+        ],
+        "/AuthStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/AuthStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/AuthStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "AuthStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}
