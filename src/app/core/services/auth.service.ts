@@ -51,7 +51,7 @@ export class AuthService {
         .pipe(
           retry(3),
           tap(response => this.handleAuthResponse(response)),
-          catchError(this.handleError)
+          catchError((error: HttpErrorResponse) => this.handleError(error))
         ).toPromise();
         
       if (!response) {
@@ -60,7 +60,10 @@ export class AuthService {
       
       return response;
     } catch (error) {
-      throw this.handleError(error);
+      if (error instanceof HttpErrorResponse) {
+        throw this.handleError(error);
+      }
+      throw new Error('An unexpected error occurred during registration');
     }
   }
 
@@ -119,9 +122,8 @@ export class AuthService {
 
   // Get current auth status
   isAuthenticated(): boolean {
-    const token = localStorage.getItem(this.TOKEN_KEY);
-    const expiry = localStorage.getItem(this.TOKEN_EXPIRY_KEY);
-    return !!(token && expiry && new Date(expiry) > new Date());
+    const token = this.getToken();
+    return !!token;
   }
 
   // Get current user
@@ -131,17 +133,57 @@ export class AuthService {
 
   // Handle authentication response
   private handleAuthResponse(response: AuthResponse): void {
-    if (response.token) {
-      localStorage.setItem(this.TOKEN_KEY, response.token);
-      localStorage.setItem(this.REFRESH_TOKEN_KEY, response.refreshToken);
+    if (response && response.token) {
+      console.log('Auth response received:', { 
+        hasToken: !!response.token,
+        hasRefreshToken: !!response.refreshToken,
+        expiresIn: response.expiresIn 
+      });
       
+      // Store the tokens
+      localStorage.setItem(this.TOKEN_KEY, response.token);
+      if (response.refreshToken) {
+        localStorage.setItem(this.REFRESH_TOKEN_KEY, response.refreshToken);
+      }
+      
+      // Calculate and store expiry
       const expiryDate = new Date();
-      expiryDate.setSeconds(expiryDate.getSeconds() + response.expiresIn);
+      expiryDate.setSeconds(expiryDate.getSeconds() + (response.expiresIn || 3600));
       localStorage.setItem(this.TOKEN_EXPIRY_KEY, expiryDate.toISOString());
       
+      // Decode and set user
       this.decodeAndSetUser(response.token);
+      
+      // Start refresh timer
       this.startRefreshTokenTimer();
+      
+      console.log('Auth state after login:', {
+        token: !!localStorage.getItem(this.TOKEN_KEY),
+        refreshToken: !!localStorage.getItem(this.REFRESH_TOKEN_KEY),
+        expiry: localStorage.getItem(this.TOKEN_EXPIRY_KEY)
+      });
+    } else {
+      console.error('Invalid auth response:', response);
+      this.logout();
     }
+  }
+
+  // Get the current token
+  getToken(): string | null {
+    const token = localStorage.getItem(this.TOKEN_KEY);
+    const expiry = localStorage.getItem(this.TOKEN_EXPIRY_KEY);
+    
+    if (token && expiry && new Date(expiry) > new Date()) {
+      return token;
+    }
+    
+    // Token expired
+    if (token) {
+      console.log('Token expired, attempting refresh...');
+      this.refreshToken().subscribe();
+    }
+    
+    return null;
   }
 
   // Decode and set user
@@ -153,7 +195,13 @@ export class AuthService {
         email: decoded.email,
         firstName: decoded.firstName,
         lastName: decoded.lastName,
-        emailVerified: decoded.emailVerified
+        isEmailVerified: decoded.emailVerified,
+        role: decoded.role,
+        phoneNumber: decoded.phoneNumber,
+        idNumber: decoded.idNumber,
+        platformId: decoded.platformId,
+        createdAt: decoded.createdAt,
+        updatedAt: decoded.updatedAt
       };
       this.currentUserSubject.next(user);
     } catch (error) {

@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { NgChartsModule } from 'ng2-charts/ng-charts.module';
 
 import { DashboardComponent } from './dashboard.component';
 
@@ -13,6 +14,7 @@ import { DashboardComponent } from './dashboard.component';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
+    NgChartsModule,
     RouterModule.forChild([
       { path: '', component: DashboardComponent }
     ])

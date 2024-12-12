@@ -34,10 +34,13 @@
             </mat-error>
           </mat-form-field>
 
-          <button mat-raised-button color="primary" type="submit" class="full-width login-button" 
-                  [disabled]="loginForm.invalid">
-            Sign In
-          </button>
+          <div class="button-container">
+            <button mat-raised-button color="primary" type="submit" class="full-width" 
+                    [disabled]="loginForm.invalid || isLoading">
+              <span *ngIf="!isLoading">Sign In</span>
+              <mat-spinner *ngIf="isLoading" diameter="20" class="spinner-inside-button"></mat-spinner>
+            </button>
+          </div>
         </form>
       </mat-card-content>
     </mat-card>
